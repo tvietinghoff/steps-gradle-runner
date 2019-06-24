@@ -276,6 +276,15 @@ outputs:
 
         If the build generates more than one APK file which fulfills the
         filter inputs this output will contain the last one's path.
+  - ORIGINAL_APK_PATH_LIST:
+    opts:
+      title: "List of the generated APK file paths"
+      summary: "List of the original locations of of generated APK file paths - after filtering."
+      description: |-
+        This output will include the original paths of the generated APK files in the build output folders,
+        after filtering based on the filter inputs.
+
+        The paths are separated with `|` character, eg: `app-armeabi-v7a-debug.apk|app-mips-debug.apk|app-x86-debug.apk`
   - BITRISE_APK_PATH_LIST:
     opts:
       title: "List of the generated APK file paths"

@@ -377,6 +377,7 @@ func main() {
 		log.Warnf("No file name matched app filters")
 	}
 
+	var originalApkFiles []string
 	var copiedApkFiles []string
 	var copiedAabFiles []string
 	for _, appFile := range appFiles {
@@ -407,6 +408,7 @@ func main() {
 		switch strings.ToLower(ext) {
 		case ".apk":
 			copiedApkFiles = append(copiedApkFiles, deployPth)
+			originalApkFiles = append(originalApkFiles, appFile)
 		case ".aab":
 			copiedAabFiles = append(copiedAabFiles, deployPth)
 		default:
@@ -425,8 +427,9 @@ func main() {
 		}
 	}
 	for appListEnv, appFiles := range map[string][]string{
-		"BITRISE_APK_PATH_LIST": copiedApkFiles,
-		"BITRISE_AAB_PATH_LIST": copiedAabFiles} {
+		"ORIGINAL_APK_PATH_LIST": originalApkFiles,
+		"BITRISE_APK_PATH_LIST":  copiedApkFiles,
+		"BITRISE_AAB_PATH_LIST":  copiedAabFiles} {
 		if len(appFiles) != 0 {
 			appList := strings.Join(appFiles, "|")
 			if err := exportEnvironmentWithEnvman(appListEnv, appList); err != nil {
